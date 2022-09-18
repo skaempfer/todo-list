@@ -8,19 +8,26 @@ builder.Services.AddCors(options =>
     .AllowAnyMethod());
 });
 
+builder.Services.AddSingleton<Todos>();
+
 var app = builder.Build();
 
 app.UseCors("TodoAppCorsPolicy");
 
-List<Todo> todos = new List<Todo>{
-  new Todo("Empty trash", "1"),
-  new Todo("Bake cookies", "2"),
-  new Todo("Water plants", "3"),
-};
-
 //app.MapGet("/todos", () => Results.Json(todos));
-app.MapGet("/todos", () => todos);
+app.MapGet("/todos", (Todos todos) => todos.GetAll());
 
 app.Run();
 
 public record Todo(string text, string Id);
+
+public class Todos
+{
+  private static IReadOnlyList<Todo> AllTodos = new List<Todo>{
+    new Todo("Empty trash", "1"),
+    new Todo("Bake cookies", "2"),
+    new Todo("Water plants", "3"),
+  }.AsReadOnly();
+
+  public IReadOnlyList<Todo> GetAll() => AllTodos;
+}
