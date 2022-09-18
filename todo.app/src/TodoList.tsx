@@ -20,12 +20,13 @@ const TodoList: FunctionComponent = () => {
   const handleTextChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputText(event.target.value.trim());
+    setInputText(event.target.value);
   };
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (inputText.length > 0) {
-      setTodos([...todos, { text: inputText, key: createKey() }]);
+    const newTodo = inputText.trim();
+    if (newTodo.length > 0) {
+      setTodos([...todos, { text: newTodo, key: createKey() }]);
       setInputText("");
     }
   };
