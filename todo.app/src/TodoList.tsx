@@ -11,8 +11,9 @@ type Todo = {
 
 const TodoList: FunctionComponent = () => {
   const [todos, setTodos] = useState<Todo[]>([
-    { text: "Foo", key: createKey() },
-    { text: "Bar", key: createKey() },
+    { text: "Empty trash", key: createKey() },
+    { text: "Bake cookies", key: createKey() },
+    { text: "Water plants", key: createKey() },
   ]);
   const [inputText, setInputText] = useState<string>("");
 
@@ -38,6 +39,16 @@ const TodoList: FunctionComponent = () => {
 
   return (
     <>
+      <TextField
+        variant="standard"
+        value={inputText}
+        placeholder="New todo"
+        onChange={handleTextChange}
+        style={{ marginRight: "16px", width: "250px" }}
+      />
+      <Button variant="outlined" onClick={handleButtonClick}>
+        Add
+      </Button>
       <List>
         {todos.map((todo) => (
           <TodoListItem
@@ -47,15 +58,6 @@ const TodoList: FunctionComponent = () => {
           />
         ))}
       </List>
-      <TextField
-        variant="standard"
-        value={inputText}
-        placeholder="New todo"
-        onChange={handleTextChange}
-      />
-      <Button variant="outlined" onClick={handleButtonClick}>
-        Add
-      </Button>
     </>
   );
 };
