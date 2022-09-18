@@ -13,11 +13,12 @@ const TodoList: FunctionComponent = () => {
   const [inputText, setInputText] = useState<string>("");
 
   useEffect(() => {
-    setTodos([
-      { text: "Empty trash", id: uuidv4() },
-      { text: "Bake cookies", id: uuidv4() },
-      { text: "Water plants", id: uuidv4() },
-    ]);
+    const loadTodos = async () => {
+      const response = await fetch("https://localhost:7066/todos");
+      const data = (await response.json()) as Todo[];
+      setTodos(data);
+    };
+    loadTodos();
   }, []);
 
   const addTodo = () => {
