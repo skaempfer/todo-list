@@ -1,14 +1,18 @@
 import { FunctionComponent, useState } from "react";
 import {
   Checkbox,
+  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 type TodoListItemProps = {
+  key: string;
   text: string;
+  deleteCallback: () => void;
 };
 
 const TodoListItem: FunctionComponent<TodoListItemProps> = (
@@ -19,8 +23,20 @@ const TodoListItem: FunctionComponent<TodoListItemProps> = (
   const handleToggle = () => () => {
     setChecked(!checked);
   };
+
   return (
-    <ListItem>
+    <ListItem
+      secondaryAction={
+        <IconButton
+          edge="end"
+          aria-label="Delete"
+          onClick={() => props.deleteCallback()}
+        >
+          <DeleteOutlineOutlined />
+        </IconButton>
+      }
+      disablePadding
+    >
       <ListItemButton role={undefined} onClick={handleToggle()} dense>
         <ListItemIcon>
           <Checkbox
