@@ -1,5 +1,5 @@
-import { FunctionComponent, useState } from "react";
-import { Button, List, TextField } from "@mui/material";
+import { FunctionComponent, useEffect, useState } from "react";
+import { Box, Button, CircularProgress, List, TextField } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import TodoListItem from "./TodoListItem";
 
@@ -9,23 +9,27 @@ type Todo = {
 };
 
 const TodoList: FunctionComponent = () => {
-  const [todos, setTodos] = useState<Todo[]>([
-    { text: "Empty trash", id: uuidv4() },
-    { text: "Bake cookies", id: uuidv4() },
-    { text: "Water plants", id: uuidv4() },
-  ]);
+  const [todos, setTodos] = useState<Todo[] | null>(null);
   const [inputText, setInputText] = useState<string>("");
+
+  useEffect(() => {
+    setTodos([
+      { text: "Empty trash", id: uuidv4() },
+      { text: "Bake cookies", id: uuidv4() },
+      { text: "Water plants", id: uuidv4() },
+    ]);
+  }, []);
 
   const addTodo = () => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
-      setTodos([...todos, { text: newTodo, id: uuidv4() }]);
+      setTodos([...(todos ?? []), { text: newTodo, id: uuidv4() }]);
       setInputText("");
     }
   };
 
   const removeTodo = (id: string) => {
-    setTodos(todos.filter((x) => x.id !== id));
+    setTodos((todos ?? []).filter((x) => x.id !== id));
   };
 
   return (
@@ -36,19 +40,33 @@ const TodoList: FunctionComponent = () => {
         placeholder="New todo"
         onChange={(e) => setInputText(e.target.value)}
         style={{ marginRight: "16px", width: "250px" }}
+        disabled={todos === null}
       />
-      <Button variant="outlined" onClick={() => addTodo()}>
+      <Button
+        variant="outlined"
+        onClick={() => addTodo()}
+        disabled={todos === null}
+      >
         Add
       </Button>
-      <List>
-        {todos.map((todo) => (
-          <TodoListItem
-            text={todo.text}
-            key={todo.id}
-            deleteCallback={() => removeTodo(todo.id)}
-          />
-        ))}
-      </List>
+      <Box justifyContent={"center"}>
+        {todos === null && (
+          <Box sx={{ my: 4, display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </Box>
+        )}
+        {todos !== null && (
+          <List>
+            {todos.map((todo) => (
+              <TodoListItem
+                text={todo.text}
+                key={todo.id}
+                deleteCallback={() => removeTodo(todo.id)}
+              />
+            ))}
+          </List>
+        )}
+      </Box>
     </>
   );
 };
