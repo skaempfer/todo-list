@@ -16,12 +16,6 @@ const TodoList: FunctionComponent = () => {
   ]);
   const [inputText, setInputText] = useState<string>("");
 
-  const handleTextChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setInputText(event.target.value);
-  };
-
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
@@ -43,7 +37,7 @@ const TodoList: FunctionComponent = () => {
         variant="standard"
         value={inputText}
         placeholder="New todo"
-        onChange={handleTextChange}
+        onChange={(e) => setInputText(e.target.value)}
         style={{ marginRight: "16px", width: "250px" }}
       />
       <Button variant="outlined" onClick={handleButtonClick}>
