@@ -16,7 +16,7 @@ const TodoList: FunctionComponent = () => {
   ]);
   const [inputText, setInputText] = useState<string>("");
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const addTodo = () => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
       setTodos([...todos, { text: newTodo, id: uuidv4() }]);
@@ -24,7 +24,7 @@ const TodoList: FunctionComponent = () => {
     }
   };
 
-  const deleteItem = useCallback(
+  const removeTodo = useCallback(
     (id: string) => {
       setTodos(todos.filter((x) => x.id !== id));
     },
@@ -40,7 +40,7 @@ const TodoList: FunctionComponent = () => {
         onChange={(e) => setInputText(e.target.value)}
         style={{ marginRight: "16px", width: "250px" }}
       />
-      <Button variant="outlined" onClick={handleButtonClick}>
+      <Button variant="outlined" onClick={() => addTodo()}>
         Add
       </Button>
       <List>
@@ -48,7 +48,7 @@ const TodoList: FunctionComponent = () => {
           <TodoListItem
             text={todo.text}
             key={todo.id}
-            deleteCallback={() => deleteItem(todo.id)}
+            deleteCallback={() => removeTodo(todo.id)}
           />
         ))}
       </List>
