@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { Button, List, TextField } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import TodoListItem from "./TodoListItem";
@@ -24,12 +24,9 @@ const TodoList: FunctionComponent = () => {
     }
   };
 
-  const removeTodo = useCallback(
-    (id: string) => {
-      setTodos(todos.filter((x) => x.id !== id));
-    },
-    [todos]
-  );
+  const removeTodo = (id: string) => {
+    setTodos(todos.filter((x) => x.id !== id));
+  };
 
   return (
     <>
