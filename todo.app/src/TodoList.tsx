@@ -1,19 +1,18 @@
 import { FunctionComponent, useCallback, useState } from "react";
 import { Button, List, TextField } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 import TodoListItem from "./TodoListItem";
-
-const createKey = (): string => (Date.now() + Math.random() * 10).toString();
 
 type Todo = {
   text: string;
-  key: string;
+  id: string;
 };
 
 const TodoList: FunctionComponent = () => {
   const [todos, setTodos] = useState<Todo[]>([
-    { text: "Empty trash", key: createKey() },
-    { text: "Bake cookies", key: createKey() },
-    { text: "Water plants", key: createKey() },
+    { text: "Empty trash", id: uuidv4() },
+    { text: "Bake cookies", id: uuidv4() },
+    { text: "Water plants", id: uuidv4() },
   ]);
   const [inputText, setInputText] = useState<string>("");
 
@@ -26,14 +25,14 @@ const TodoList: FunctionComponent = () => {
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
-      setTodos([...todos, { text: newTodo, key: createKey() }]);
+      setTodos([...todos, { text: newTodo, id: uuidv4() }]);
       setInputText("");
     }
   };
 
   const deleteItem = useCallback(
-    (deleteKey: string) => {
-      setTodos(todos.filter((x) => x.key !== deleteKey));
+    (id: string) => {
+      setTodos(todos.filter((x) => x.id !== id));
     },
     [todos]
   );
@@ -54,8 +53,8 @@ const TodoList: FunctionComponent = () => {
         {todos.map((todo) => (
           <TodoListItem
             text={todo.text}
-            key={todo.key}
-            deleteCallback={() => deleteItem(todo.key)}
+            key={todo.id}
+            deleteCallback={() => deleteItem(todo.id)}
           />
         ))}
       </List>
