@@ -1,5 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { Box, Button, CircularProgress, List, TextField } from "@mui/material";
+import { Alert, Box, CircularProgress, List, TextField } from "@mui/material";
+import { Add, KeyboardReturnOutlined } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import { v4 as uuidv4 } from "uuid";
 import TodoListItem from "./TodoListItem";
 
@@ -11,6 +13,8 @@ type Todo = {
 const TodoList: FunctionComponent = () => {
   const [todos, setTodos] = useState<Todo[] | null>(null);
   const [inputText, setInputText] = useState<string>("");
+  const [saving, setSaving] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -24,13 +28,36 @@ const TodoList: FunctionComponent = () => {
   const addTodo = () => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
-      setTodos([...(todos ?? []), { text: newTodo, id: uuidv4() }]);
-      setInputText("");
+      setSaving(true);
+      fetch("https://localhost:7066/todos", {
+        method: "POST",
+        body: JSON.stringify({ text: newTodo }),
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setTodos([...(todos ?? []), json as Todo]);
+          setInputText("");
+        })
+        .catch((reason) => setError(reason))
+        .finally(() => setSaving(false));
     }
   };
 
   const removeTodo = (id: string) => {
-    setTodos((todos ?? []).filter((x) => x.id !== id));
+    fetch(`https://localhost:7066/todo/${id}`, { method: "DELETE" })
+      .then((response) => {
+        if (response.ok) {
+          setTodos((todos ?? []).filter((x) => x.id !== id));
+          return;
+        }
+        throw new Error(
+          `Could not delete todo with id ${id}: ${response.statusText}`
+        );
+      })
+      .catch((reason) => setError(reason));
   };
 
   return (
@@ -41,15 +68,18 @@ const TodoList: FunctionComponent = () => {
         placeholder="New todo"
         onChange={(e) => setInputText(e.target.value)}
         style={{ marginRight: "16px", width: "250px" }}
-        disabled={todos === null}
+        disabled={todos === null || saving}
       />
-      <Button
+      <LoadingButton
         variant="outlined"
         onClick={() => addTodo()}
-        disabled={todos === null}
+        disabled={todos === null || saving}
+        startIcon={<Add />}
+        loadingPosition="start"
+        loading={saving}
       >
         Add
-      </Button>
+      </LoadingButton>
       <Box justifyContent={"center"}>
         {todos === null && (
           <Box sx={{ my: 4, display: "flex", justifyContent: "center" }}>
@@ -66,6 +96,13 @@ const TodoList: FunctionComponent = () => {
               />
             ))}
           </List>
+        )}
+      </Box>
+      <Box>
+        {error != null && (
+          <Alert severity="error" onClose={() => setError(null)}>
+            {error}
+          </Alert>
         )}
       </Box>
     </>
