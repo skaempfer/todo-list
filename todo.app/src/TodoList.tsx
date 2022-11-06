@@ -18,7 +18,7 @@ const TodoList: FunctionComponent = () => {
 
   useEffect(() => {
     const loadTodos = async () => {
-      const response = await fetch("https://localhost:7066/todos");
+      const response = await fetch("http://localhost:5044/todos");
       const data = (await response.json()) as Todo[];
       setTodos(data);
     };
@@ -29,7 +29,7 @@ const TodoList: FunctionComponent = () => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
       setSaving(true);
-      fetch("https://localhost:7066/todos", {
+      fetch("http://localhost:5044/todos", {
         method: "POST",
         body: JSON.stringify({ text: newTodo }),
         headers: {
@@ -47,7 +47,7 @@ const TodoList: FunctionComponent = () => {
   };
 
   const removeTodo = (id: string) => {
-    fetch(`https://localhost:7066/todo/${id}`, { method: "DELETE" })
+    fetch(`http://localhost:5044/todo/${id}`, { method: "DELETE" })
       .then((response) => {
         if (response.ok) {
           setTodos((todos ?? []).filter((x) => x.id !== id));
