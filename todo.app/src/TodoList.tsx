@@ -12,7 +12,7 @@ type Todo = {
 const TodoList: FunctionComponent = () => {
   const [todos, setTodos] = useState<Todo[] | null>(null);
   const [inputText, setInputText] = useState<string>("");
-  const [saving, setSaving] = useState<boolean>(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const TodoList: FunctionComponent = () => {
   const addTodo = () => {
     const newTodo = inputText.trim();
     if (newTodo.length > 0) {
-      setSaving(true);
+      setProcessing(true);
       fetch("http://localhost:5044/todos", {
         method: "POST",
         body: JSON.stringify({ text: newTodo }),
@@ -41,7 +41,7 @@ const TodoList: FunctionComponent = () => {
           setInputText("");
         })
         .catch((reason) => setError(reason))
-        .finally(() => setSaving(false));
+        .finally(() => setProcessing(false));
     }
   };
 
@@ -67,15 +67,15 @@ const TodoList: FunctionComponent = () => {
         placeholder="New todo"
         onChange={(e) => setInputText(e.target.value)}
         style={{ marginRight: "16px", width: "250px" }}
-        disabled={todos === null || saving}
+        disabled={todos === null || processing}
       />
       <LoadingButton
         variant="outlined"
         onClick={() => addTodo()}
-        disabled={todos === null || saving}
+        disabled={todos === null || processing}
         startIcon={<Add />}
         loadingPosition="start"
-        loading={saving}
+        loading={processing}
       >
         Add
       </LoadingButton>
