@@ -1,4 +1,4 @@
-# ASP.NET Minimal API Demo
+# Todo List with ASP.NET Minimal API and React
 
 This application demonstrates the capabilities of [ASP.NET Minimal APIs](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-6.0).
 It consists of an React-based web application todo list (todo.app) and a ASP.NET6-based web service (todo.service).
@@ -8,6 +8,7 @@ It consists of an React-based web application todo list (todo.app) and a ASP.NET
 1. Open two command line shells
 2. In the first shell navigate to `./todo.service` and execute `dotnet run`
 3. In the second shell navigate to `./todo.app` and execute `npm ci` and then `npm start`
+4. Open `http://localhost:5044/todos` to query the `todo.service`. Open `http://localhost:3000` to access the `todo.app` application.
 
 ## Developing
 
