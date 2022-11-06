@@ -1,8 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Alert, Box, CircularProgress, List, TextField } from "@mui/material";
-import { Add, KeyboardReturnOutlined } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { v4 as uuidv4 } from "uuid";
 import TodoListItem from "./TodoListItem";
 
 type Todo = {
