@@ -23,7 +23,11 @@ app.MapPost("/todos", (Todos todos, TodoCreation newTodo) =>
   return Results.Created($"/todos/{createdTodo.Id}", createdTodo);
 });
 
-app.MapDelete("/todo/{id}", (Todos todos, string id) => todos.Remove(id));
+app.MapDelete("/todo/{id}", (Todos todos, string id) =>
+{
+  todos.Remove(id);
+  return Results.NoContent();
+});
 
 app.Run();
 
