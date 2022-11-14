@@ -7,7 +7,7 @@ It consists of an React-based web application todo list (todo.app) and a ASP.NET
 
 1. Open two command line shells
 2. In the first shell navigate to `./todo.service` and execute `dotnet run`
-3. In the second shell navigate to `./todo.app` and execute `npm ci` and then `npm start`
+3. In the second shell navigate to `./todo.app` and execute `npm ci` and then `npm run dev`
 
 ## Developing
 
