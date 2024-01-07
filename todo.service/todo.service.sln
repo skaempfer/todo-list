@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "todo.service", "todo.servic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E973CDD4-DB73-488F-B00B-B49D78CB4419}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		..\global.json = ..\global.json
 	EndProjectSection
 EndProject
@@ -35,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E078161-EB1E-4090-8428-2B80FC68A634}
 	EndGlobalSection
 EndGlobal
