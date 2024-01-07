@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Box, Typography } from "@mui/material";
-import "./App.css";
 import TodoList from "./TodoList";
 
 function App() {
