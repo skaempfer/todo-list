@@ -8,6 +8,8 @@ It consists of an React-based web application todo list (todo.app) and a ASP.NET
 1. Open two command line shells
 2. In the first shell navigate to `./todo.service` and execute `dotnet run`
 3. In the second shell navigate to `./todo.app` and execute `npm ci` and then `npm run dev`
+4. Open `http://localhost:5044/todos` to access the service
+5. Open `http://localhost:3000/` to access the app
 
 ## Developing
 
