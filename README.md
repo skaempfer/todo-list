@@ -11,7 +11,7 @@ This todo list application is serves as a basis for technology demonstrations an
 
 1. Open two command line shells
 2. In the first shell navigate to `./todo.service` and execute `dotnet run`
-3. In the second shell navigate to `./todo.app` and execute `npm ci` and then `npm run dev`
+3. In the second shell navigate to `./todo.app.react` and execute `npm ci` and then `npm run dev`
 4. Open `https://localhost:7066/todos` to access the service
 5. Open `http://localhost:3000/` to access the app
 

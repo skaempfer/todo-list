@@ -32,7 +32,7 @@
       "request": "launch",
       "type": "chrome",
       "url": "http://localhost:3000",
-      "cwd": "${workspaceFolder}/todo.app",
+      "cwd": "${workspaceFolder}/todo.app.react",
       "webRoot": "src",
       // "preLaunchTask": "start app",
       // "postDebugTask": "stop app",

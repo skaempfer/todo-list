@@ -42,7 +42,7 @@
       "type": "shell",
       "command": "npm",
       "options": {
-        "cwd": "${workspaceFolder}/todo.app",
+        "cwd": "${workspaceFolder}/todo.app.react",
       },
       "args": [ 
         "run",
