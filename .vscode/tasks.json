@@ -1,0 +1,76 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "start service",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/todo.service/todo.service.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish service",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/todo.service/todo.service.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch service",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/todo.service/todo.service.sln"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "start app",
+      "type": "shell",
+      "command": "npm",
+      "options": {
+        "cwd": "${workspaceFolder}/todo.app",
+      },
+      "args": [ 
+        "run",
+        "dev"
+      ],
+      "isBackground": true,
+      "problemMatcher": [
+        "$vite",
+      ]
+    },
+    {
+      "label": "stop app",
+      "type": "shell",
+      "command": "echo ${input:terminate}",
+    },
+    {
+      "label": "start service and app",
+      "dependsOn": ["start service", "start app"],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+    }
+  ],
+  "inputs": [
+    {
+      "id": "terminate",
+      "type": "command",
+      "command": "workbench.action.tasks.terminate",
+      "args": "terminateAll",
+    }
+  ]
+}

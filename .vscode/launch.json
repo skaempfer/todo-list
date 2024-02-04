@@ -1,0 +1,49 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Use IntelliSense to find out which attributes exist for C# debugging
+      // Use hover for the description of the existing attributes
+      // For further information visit https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md.
+      "name": "Service: Launch web",
+      "type": "coreclr",
+      "request": "launch",
+      // "preLaunchTask": "start service",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/todo.service/bin/Debug/net8.0/todo.service.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/todo.service",
+      "stopAtEntry": false,
+      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/todos"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
+      "name": "App: Launch web",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "cwd": "${workspaceFolder}/todo.app",
+      "webRoot": "src",
+      // "preLaunchTask": "start app",
+      // "postDebugTask": "stop app",
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Compound: Service + App",
+      "configurations": ["Service: Launch web", "App: Launch web"],
+      "preLaunchTask": "start service and app",
+      "stopAll": true,
+    }
+  ]
+}
