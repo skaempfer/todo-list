@@ -38,11 +38,21 @@ app.MapDelete("/todo/{id}", (Todos todos, string id) =>
   return Results.NoContent();
 });
 
+app.MapPost("/login", (UserLogin login) =>
+{
+  try { _ = new System.Net.Mail.MailAddress(login.Email); }
+  catch { return Results.BadRequest(new { error = "Invalid email format." }); }
+
+  return Results.Ok(new { message = "Login accepted." });
+});
+
 app.Run();
 
 public record Todo(string Text, string Id);
 
 public record TodoCreation(string Text);
+
+public record UserLogin(string Email, string Password);
 
 public class Todos
 {
